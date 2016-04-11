@@ -1,4 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="Test1.xcdatamodel" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <elements/>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="14F1605" minimumToolsVersion="Automatic">
+    <entity name="CacheItem" representedClassName="CacheItem" syncable="YES">
+        <attribute name="data" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="lastModified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="url" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="DepositionPartner" representedClassName="DepositionPartner" syncable="YES">
+        <attribute name="depositionDuration" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="description_" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="externalPartnerId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hasLocations" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="hasPreferentialDeposition" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isMomentary" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="limitations" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="moneyMax" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="moneyMin" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="picture" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pointType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="points" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DepositionPoint" inverseName="partner" inverseEntity="DepositionPoint" syncable="YES"/>
+    </entity>
+    <entity name="DepositionPoint" representedClassName="DepositionPoint" syncable="YES">
+        <attribute name="bankInfo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bankName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fullAddress" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="partnerName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phones" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="verificationInfo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="workHours" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="partner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DepositionPartner" inverseName="points" inverseEntity="DepositionPartner" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="DepositionPartner" positionX="-497" positionY="36" width="128" height="268"/>
+        <element name="DepositionPoint" positionX="-234" positionY="75" width="128" height="193"/>
+        <element name="CacheItem" positionX="-254" positionY="-124" width="128" height="88"/>
+    </elements>
 </model>

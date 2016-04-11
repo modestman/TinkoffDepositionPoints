@@ -7,27 +7,65 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		845C35671CB6D66400884C0F /* DepositionPointJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 845C35661CB6D66400884C0F /* DepositionPointJsonParser.m */; };
+		845C35701CB783B300884C0F /* DepositionPoint+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 845C35691CB783B300884C0F /* DepositionPoint+CoreDataProperties.m */; };
+		845C35711CB783B300884C0F /* DepositionPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 845C356B1CB783B300884C0F /* DepositionPoint.m */; };
+		845C35721CB783B300884C0F /* DepositionPartner+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 845C356D1CB783B300884C0F /* DepositionPartner+CoreDataProperties.m */; };
+		845C35731CB783B300884C0F /* DepositionPartner.m in Sources */ = {isa = PBXBuildFile; fileRef = 845C356F1CB783B300884C0F /* DepositionPartner.m */; };
 		84DBC6831CB64CC3009C3A98 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DBC6821CB64CC3009C3A98 /* main.m */; };
 		84DBC6861CB64CC3009C3A98 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DBC6851CB64CC3009C3A98 /* AppDelegate.m */; };
-		84DBC6891CB64CC4009C3A98 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DBC6881CB64CC4009C3A98 /* ViewController.m */; };
+		84DBC6891CB64CC4009C3A98 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DBC6881CB64CC4009C3A98 /* MapViewController.m */; };
 		84DBC68C1CB64CC4009C3A98 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84DBC68A1CB64CC4009C3A98 /* Main.storyboard */; };
 		84DBC68F1CB64CC4009C3A98 /* TinkoffDepositionPoints.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 84DBC68D1CB64CC4009C3A98 /* TinkoffDepositionPoints.xcdatamodeld */; };
 		84DBC6911CB64CC4009C3A98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84DBC6901CB64CC4009C3A98 /* Assets.xcassets */; };
 		84DBC6941CB64CC4009C3A98 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84DBC6921CB64CC4009C3A98 /* LaunchScreen.storyboard */; };
+		84DBC69C1CB65034009C3A98 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84DBC69B1CB65034009C3A98 /* MapKit.framework */; };
+		84DBC6A11CB650B7009C3A98 /* MapAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DBC6A01CB650B7009C3A98 /* MapAnnotation.m */; };
+		84DBC6A41CB6516D009C3A98 /* NetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DBC6A31CB6516D009C3A98 /* NetworkManager.m */; };
+		84DBC6A71CB6535F009C3A98 /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DBC6A61CB6535F009C3A98 /* DataManager.m */; };
+		84DBC6AA1CB69F41009C3A98 /* TinkoffApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DBC6A91CB69F41009C3A98 /* TinkoffApi.m */; };
+		84DF82C51CB922EE00462475 /* DepositionPartnerJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DF82C41CB922EE00462475 /* DepositionPartnerJsonParser.m */; };
+		84DF82D01CBAB40200462475 /* CacheItem+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DF82CD1CBAB40200462475 /* CacheItem+CoreDataProperties.m */; };
+		84DF82D11CBAB40200462475 /* CacheItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DF82CF1CBAB40200462475 /* CacheItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		845C35651CB6D66400884C0F /* DepositionPointJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DepositionPointJsonParser.h; sourceTree = "<group>"; };
+		845C35661CB6D66400884C0F /* DepositionPointJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DepositionPointJsonParser.m; sourceTree = "<group>"; };
+		845C35681CB783B300884C0F /* DepositionPoint+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DepositionPoint+CoreDataProperties.h"; sourceTree = "<group>"; };
+		845C35691CB783B300884C0F /* DepositionPoint+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DepositionPoint+CoreDataProperties.m"; sourceTree = "<group>"; };
+		845C356A1CB783B300884C0F /* DepositionPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DepositionPoint.h; sourceTree = "<group>"; };
+		845C356B1CB783B300884C0F /* DepositionPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DepositionPoint.m; sourceTree = "<group>"; };
+		845C356C1CB783B300884C0F /* DepositionPartner+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DepositionPartner+CoreDataProperties.h"; sourceTree = "<group>"; };
+		845C356D1CB783B300884C0F /* DepositionPartner+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DepositionPartner+CoreDataProperties.m"; sourceTree = "<group>"; };
+		845C356E1CB783B300884C0F /* DepositionPartner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DepositionPartner.h; sourceTree = "<group>"; };
+		845C356F1CB783B300884C0F /* DepositionPartner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DepositionPartner.m; sourceTree = "<group>"; };
 		84DBC67E1CB64CC3009C3A98 /* TinkoffDepositionPoints.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinkoffDepositionPoints.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84DBC6821CB64CC3009C3A98 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		84DBC6841CB64CC3009C3A98 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		84DBC6851CB64CC3009C3A98 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		84DBC6871CB64CC3009C3A98 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		84DBC6881CB64CC4009C3A98 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		84DBC6871CB64CC3009C3A98 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		84DBC6881CB64CC4009C3A98 /* MapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		84DBC68B1CB64CC4009C3A98 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		84DBC68E1CB64CC4009C3A98 /* TinkoffDepositionPoints.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TinkoffDepositionPoints.xcdatamodel; sourceTree = "<group>"; };
 		84DBC6901CB64CC4009C3A98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84DBC6931CB64CC4009C3A98 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84DBC6951CB64CC4009C3A98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84DBC69B1CB65034009C3A98 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		84DBC69F1CB650B7009C3A98 /* MapAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapAnnotation.h; sourceTree = "<group>"; };
+		84DBC6A01CB650B7009C3A98 /* MapAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapAnnotation.m; sourceTree = "<group>"; };
+		84DBC6A21CB6516D009C3A98 /* NetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkManager.h; sourceTree = "<group>"; };
+		84DBC6A31CB6516D009C3A98 /* NetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkManager.m; sourceTree = "<group>"; };
+		84DBC6A51CB6535F009C3A98 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
+		84DBC6A61CB6535F009C3A98 /* DataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
+		84DBC6A81CB69F41009C3A98 /* TinkoffApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TinkoffApi.h; sourceTree = "<group>"; };
+		84DBC6A91CB69F41009C3A98 /* TinkoffApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TinkoffApi.m; sourceTree = "<group>"; };
+		84DF82C31CB922EE00462475 /* DepositionPartnerJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DepositionPartnerJsonParser.h; sourceTree = "<group>"; };
+		84DF82C41CB922EE00462475 /* DepositionPartnerJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DepositionPartnerJsonParser.m; sourceTree = "<group>"; };
+		84DF82CC1CBAB40200462475 /* CacheItem+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CacheItem+CoreDataProperties.h"; sourceTree = "<group>"; };
+		84DF82CD1CBAB40200462475 /* CacheItem+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CacheItem+CoreDataProperties.m"; sourceTree = "<group>"; };
+		84DF82CE1CBAB40200462475 /* CacheItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheItem.h; sourceTree = "<group>"; };
+		84DF82CF1CBAB40200462475 /* CacheItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84DBC69C1CB65034009C3A98 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				84DBC6801CB64CC3009C3A98 /* TinkoffDepositionPoints */,
+				84DBC69D1CB6503E009C3A98 /* Fremeworks */,
 				84DBC67F1CB64CC3009C3A98 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -62,13 +102,24 @@
 			children = (
 				84DBC6841CB64CC3009C3A98 /* AppDelegate.h */,
 				84DBC6851CB64CC3009C3A98 /* AppDelegate.m */,
-				84DBC6871CB64CC3009C3A98 /* ViewController.h */,
-				84DBC6881CB64CC4009C3A98 /* ViewController.m */,
+				84DBC6871CB64CC3009C3A98 /* MapViewController.h */,
+				84DBC6881CB64CC4009C3A98 /* MapViewController.m */,
+				84DBC69F1CB650B7009C3A98 /* MapAnnotation.h */,
+				84DBC6A01CB650B7009C3A98 /* MapAnnotation.m */,
+				84DBC6A21CB6516D009C3A98 /* NetworkManager.h */,
+				84DBC6A31CB6516D009C3A98 /* NetworkManager.m */,
+				84DBC6A51CB6535F009C3A98 /* DataManager.h */,
+				84DBC6A61CB6535F009C3A98 /* DataManager.m */,
+				84DBC6A81CB69F41009C3A98 /* TinkoffApi.h */,
+				84DBC6A91CB69F41009C3A98 /* TinkoffApi.m */,
+				845C35651CB6D66400884C0F /* DepositionPointJsonParser.h */,
+				845C35661CB6D66400884C0F /* DepositionPointJsonParser.m */,
+				84DF82C31CB922EE00462475 /* DepositionPartnerJsonParser.h */,
+				84DF82C41CB922EE00462475 /* DepositionPartnerJsonParser.m */,
 				84DBC68A1CB64CC4009C3A98 /* Main.storyboard */,
-				84DBC6901CB64CC4009C3A98 /* Assets.xcassets */,
 				84DBC6921CB64CC4009C3A98 /* LaunchScreen.storyboard */,
-				84DBC6951CB64CC4009C3A98 /* Info.plist */,
-				84DBC68D1CB64CC4009C3A98 /* TinkoffDepositionPoints.xcdatamodeld */,
+				84DBC6901CB64CC4009C3A98 /* Assets.xcassets */,
+				84DBC69E1CB65055009C3A98 /* Model */,
 				84DBC6811CB64CC3009C3A98 /* Supporting Files */,
 			);
 			path = TinkoffDepositionPoints;
@@ -77,9 +128,38 @@
 		84DBC6811CB64CC3009C3A98 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				84DBC6951CB64CC4009C3A98 /* Info.plist */,
 				84DBC6821CB64CC3009C3A98 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		84DBC69D1CB6503E009C3A98 /* Fremeworks */ = {
+			isa = PBXGroup;
+			children = (
+				84DBC69B1CB65034009C3A98 /* MapKit.framework */,
+			);
+			name = Fremeworks;
+			sourceTree = "<group>";
+		};
+		84DBC69E1CB65055009C3A98 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				84DBC68D1CB64CC4009C3A98 /* TinkoffDepositionPoints.xcdatamodeld */,
+				84DF82CC1CBAB40200462475 /* CacheItem+CoreDataProperties.h */,
+				84DF82CD1CBAB40200462475 /* CacheItem+CoreDataProperties.m */,
+				84DF82CE1CBAB40200462475 /* CacheItem.h */,
+				84DF82CF1CBAB40200462475 /* CacheItem.m */,
+				845C35681CB783B300884C0F /* DepositionPoint+CoreDataProperties.h */,
+				845C35691CB783B300884C0F /* DepositionPoint+CoreDataProperties.m */,
+				845C356A1CB783B300884C0F /* DepositionPoint.h */,
+				845C356B1CB783B300884C0F /* DepositionPoint.m */,
+				845C356C1CB783B300884C0F /* DepositionPartner+CoreDataProperties.h */,
+				845C356D1CB783B300884C0F /* DepositionPartner+CoreDataProperties.m */,
+				845C356E1CB783B300884C0F /* DepositionPartner.h */,
+				845C356F1CB783B300884C0F /* DepositionPartner.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -154,9 +234,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				84DBC68F1CB64CC4009C3A98 /* TinkoffDepositionPoints.xcdatamodeld in Sources */,
-				84DBC6891CB64CC4009C3A98 /* ViewController.m in Sources */,
+				84DBC6891CB64CC4009C3A98 /* MapViewController.m in Sources */,
+				84DF82D01CBAB40200462475 /* CacheItem+CoreDataProperties.m in Sources */,
+				845C35671CB6D66400884C0F /* DepositionPointJsonParser.m in Sources */,
+				84DBC6AA1CB69F41009C3A98 /* TinkoffApi.m in Sources */,
+				84DBC6A71CB6535F009C3A98 /* DataManager.m in Sources */,
 				84DBC6861CB64CC3009C3A98 /* AppDelegate.m in Sources */,
+				845C35731CB783B300884C0F /* DepositionPartner.m in Sources */,
+				845C35721CB783B300884C0F /* DepositionPartner+CoreDataProperties.m in Sources */,
+				84DF82D11CBAB40200462475 /* CacheItem.m in Sources */,
 				84DBC6831CB64CC3009C3A98 /* main.m in Sources */,
+				84DBC6A41CB6516D009C3A98 /* NetworkManager.m in Sources */,
+				845C35701CB783B300884C0F /* DepositionPoint+CoreDataProperties.m in Sources */,
+				84DBC6A11CB650B7009C3A98 /* MapAnnotation.m in Sources */,
+				845C35711CB783B300884C0F /* DepositionPoint.m in Sources */,
+				84DF82C51CB922EE00462475 /* DepositionPartnerJsonParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,6 +397,7 @@
 				84DBC69A1CB64CC4009C3A98 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
