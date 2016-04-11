@@ -10,6 +10,10 @@
 #import <CoreData/CoreData.h>
 #import <UIKit/UIKit.h>
 
+
+extern NSString* const DepositionPointsUpdatedNotificationName;
+extern NSString* const DepositionPartnersUpdatedNotificationName;
+
 @interface DataManager : NSObject
 
 
@@ -19,13 +23,19 @@
 
 
 +(DataManager *)sharedInstance;
-- (void) initLocalDataStorage;
+- (void)initLocalDataStorage;
+- (void)saveContext;
 -(BOOL)saveContext:(NSManagedObjectContext*)context;
 
 -(void)loadPartners;
+-(void)loadPictureForPartner:(NSString*)picName completion:(void(^)(UIImage *image, NSError *error))completion;
+
+/// get points from local cache
 -(NSArray*)getPointsForLatitude:(double)lat longitude:(double)lon radius:(double)radius;
+
+/// send request for new points and return current available points
 -(void)beginGetDataForLatitude:(double)lat longitude:(double)lon radius:(double)radius
                     completion:(void(^)(NSArray *points, NSError *error))completion;
--(void)loadPictureForPartner:(NSString*)picName completion:(void(^)(UIImage *image, NSError *error))completion;
+
 
 @end

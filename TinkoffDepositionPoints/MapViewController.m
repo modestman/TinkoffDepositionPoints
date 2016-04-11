@@ -34,17 +34,10 @@
     {
         [locationManager requestWhenInUseAuthorization];
     }
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePoints:) name:@"DepositionPointsUpdated" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updatePoints:)
+                                                 name:DepositionPointsUpdatedNotificationName object:nil];
     
-    /*****  Debug ****/
-    MKCoordinateSpan span;
-    span.latitudeDelta = 0.02;
-    span.longitudeDelta = 0.02;
-    MKCoordinateRegion region;
-    region.span = span;
-    region.center = CLLocationCoordinate2DMake(55.751, 37.620417);
-    [self.mapView setRegion:region animated:NO];
-    /****************/
+
     
 }
 
@@ -72,6 +65,22 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    // initial positioning
+    MKCoordinateSpan span;
+    span.latitudeDelta = 0.02;
+    span.longitudeDelta = 0.02;
+    MKCoordinateRegion region;
+    region.span = span;
+    if (allowUserLocation)
+    {
+        region.center = locationManager.location.coordinate;
+    }
+    else
+    {
+        region.center = CLLocationCoordinate2DMake(55.751, 37.620417); // Moscow
+    }
+    [self.mapView setRegion:region animated:NO];
 }
 
 -(CLLocationDistance)distanceBetweenPoint:(CLLocationCoordinate2D)point1 andPoint:(CLLocationCoordinate2D)point2
@@ -112,8 +121,16 @@
 {
     if (allowUserLocation)
     {
-        [self.mapView setCenterCoordinate:locationManager.location.coordinate animated:YES];
+        if (![self comparePoint1:self.mapView.region.center andPoint2:locationManager.location.coordinate])
+        {
+            [self.mapView setCenterCoordinate:locationManager.location.coordinate animated:YES];
+        }
     }
+}
+
+-(BOOL)comparePoint1:(CLLocationCoordinate2D)point1 andPoint2:(CLLocationCoordinate2D)point2
+{
+    return fabs(point1.latitude - point2.latitude) <= 1e-5 && fabs(point1.longitude - point2.longitude) <= 1e-5;
 }
 
 #pragma mark - MapView Delegate
@@ -127,6 +144,7 @@
 {
     static NSString *identifier = @"MapAnnotationView";
     
+    // default user location point
     if ([annotation isKindOfClass:[MKUserLocation class]]) {
         return nil;
     }
@@ -135,16 +153,15 @@
     if (view)
     {
         view.annotation = annotation;
-        
     }
     else
     {
         view = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
         view.canShowCallout = YES;
         view.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-    
     }
 
+    // set icons for annotation view
     MapAnnotation *ant = annotation;
     if (partnerPictures[ant.picture] != nil)
     {
@@ -154,8 +171,11 @@
     {
         [[DataManager sharedInstance] loadPictureForPartner:ant.picture completion:^(UIImage *image, NSError *error) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                ((UIImageView*)view.leftCalloutAccessoryView).image = image;
-                [partnerPictures setObject:image forKey:ant.picture];
+                if (!error && image != nil)
+                {
+                    ((UIImageView*)view.leftCalloutAccessoryView).image = image;
+                    [partnerPictures setObject:image forKey:ant.picture];
+                }
             });
         }];
     }
@@ -168,19 +188,20 @@
     CLLocationCoordinate2D topLeftLoc;
     topLeftLoc = [self.mapView convertPoint:CGPointMake(0, 0) toCoordinateFromView:self.mapView];
     CLLocationDistance radius = [self distanceBetweenPoint:centerLoc andPoint:topLeftLoc];
-    if (radius > 1000000) return; // quick fix
+    if (radius > 1000000) return; // do not request points for whole world
     
     [[DataManager sharedInstance] beginGetDataForLatitude:centerLoc.latitude longitude:centerLoc.longitude
                                                    radius:radius completion:^(NSArray *points, NSError *error) {
        if (!error)
        {
-           // здесь получаем данные из кэша
+           // here we have data from cache
            NSArray *annotations = [self makeAnnotationsFromPoints:points];
            [self updateMapViewAnnotationsWithAnnotations:annotations];
        }
    }];
 }
 
+// update points after complete network request
 -(void)updatePoints:(NSNotification*)ntf
 {
     CLLocationCoordinate2D centerLoc = self.mapView.region.center;

@@ -13,7 +13,6 @@
 
 @implementation DepositionPointJsonParser
 {
-    NSNumberFormatter *fmt;
     NSManagedObjectContext *context;
     NSMutableDictionary *partners;
 }
@@ -23,10 +22,6 @@
     self = [super init];
     if (self)
     {
-        fmt = [NSNumberFormatter new];
-        fmt.maximumFractionDigits = 5;
-        fmt.decimalSeparator = @".";
-        
         partners = [NSMutableDictionary new];
     }
     return self;

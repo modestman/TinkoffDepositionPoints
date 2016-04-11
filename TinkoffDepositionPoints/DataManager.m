@@ -16,6 +16,10 @@
 #import "CacheItem.h"
 #import <CoreLocation/CoreLocation.h>
 
+
+NSString* const DepositionPointsUpdatedNotificationName = @"DepositionPointsUpdated";
+NSString* const DepositionPartnersUpdatedNotificationName = @"DepositionPartnersUpdated";
+
 @interface DataManager()
 {
     NSPersistentStoreCoordinator *_persistentStoreCoordinator;
@@ -25,7 +29,6 @@
     
     NSOperationQueue *parseQueue;
     NSOperationQueue *getImageQueue;
-    NSURLSession *getImageSession;
 }
 @end
 
@@ -61,11 +64,17 @@
         parseQueue.maxConcurrentOperationCount = 1;
         getImageQueue = [NSOperationQueue new];
         getImageQueue.maxConcurrentOperationCount = 1;
-        getImageSession = [NSURLSession sessionWithConfiguration:[NetworkManager sharedInstance].sessionConfig
-                                                        delegate:nil delegateQueue:getImageQueue];
     }
     return self;
 }
+
+- (void) initLocalDataStorage
+{
+    [self createMainMOC];
+    [self loadPartners];
+}
+
+#pragma mark - Core Data stack
 
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
     // The persistent store coordinator for the application. This implementation creates and returns a coordinator, having added the store for the application to it.
@@ -113,7 +122,17 @@
 {
     if (!_managedObjectContext)
     {
-        [self createMainMOC];
+        if (![[NSThread currentThread] isMainThread])
+        {
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                [self createMainMOC];
+            });
+        }
+        else
+        {
+            [self createMainMOC];
+        }
+        
     }
     return [self getMOCFor:[NSThread currentThread]];
 }
@@ -122,40 +141,41 @@
 {
     if (_managedObjectContext)
         return;
-    
+
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil)
     {
-        _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType]; // ???
+        _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
         [_managedObjectContext setPersistentStoreCoordinator:coordinator];
     }
 }
 
 - (NSManagedObjectContext *)getMOCFor:(NSThread *) thread
 {
-    NSNumber *threadHash = [NSNumber numberWithUnsignedInteger:[thread hash]];
-    if ([threadMOCs objectForKey:threadHash] == nil)
+    if ([thread isMainThread])
     {
-        NSManagedObjectContextConcurrencyType concurrencyType = [thread isMainThread] ? NSMainQueueConcurrencyType : NSPrivateQueueConcurrencyType;
-        NSManagedObjectContext *newMoc = [[NSManagedObjectContext alloc] initWithConcurrencyType:concurrencyType];
-        newMoc.parentContext = _managedObjectContext;
-        [threadMOCs setObject:newMoc forKey:threadHash];
+        return _managedObjectContext;
     }
-    
-    return [threadMOCs objectForKey:threadHash];
+    @synchronized(threadMOCs)
+    {
+        NSNumber *threadHash = [NSNumber numberWithUnsignedInteger:[thread hash]];
+        if ([threadMOCs objectForKey:threadHash] == nil)
+        {
+            NSManagedObjectContext *newMoc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+            newMoc.parentContext = _managedObjectContext;
+            [threadMOCs setObject:newMoc forKey:threadHash];
+        }
+        return [threadMOCs objectForKey:threadHash];
+    }
 }
 
 -(void)threadExit
 {
-    [threadMOCs removeObjectForKey:@([NSThread currentThread].hash)];
+    @synchronized(threadMOCs)
+    {
+        [threadMOCs removeObjectForKey:@([NSThread currentThread].hash)];
+    }
 }
-
-- (void) initLocalDataStorage
-{
-    [self createMainMOC];
-    [self loadPartners];
-}
-
 
 - (void)saveContext
 {
@@ -183,6 +203,8 @@
     return result;
 }
 
+#pragma mark - Application's Documents directory
+
 // Returns the URL to the application's Documents directory.
 - (NSURL *)applicationDocumentsDirectory
 {
@@ -195,7 +217,8 @@
     return [[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
-#pragma mark -
+
+#pragma mark - Business logic
 
 -(void)loadPartners
 {
@@ -206,37 +229,10 @@
             [parseQueue addOperationWithBlock:^{
                 DepositionPartnerJsonParser *parser = [DepositionPartnerJsonParser new];
                 [parser parseData:data];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"DepositionPartnersUpdated" object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:DepositionPartnersUpdatedNotificationName object:nil];
             }];
         }
     }];
-}
-
--(void)beginGetDataForLatitude:(double)lat longitude:(double)lon radius:(double)radius
-                    completion:(void(^)(NSArray *points, NSError *error))completion
-{
-    // request new data
-    NSURL *requestUrl = [TinkoffApi depositionPointsForLatitude:lat longitude:lon radius:radius];
-    [[NetworkManager sharedInstance] getData:requestUrl completion:^(NSData *data, NSError *error) {
-        if (!error && [data length] > 0)
-        {
-            // parse data and save to db
-            [parseQueue addOperationWithBlock:^{
-                DepositionPointJsonParser *parser = [DepositionPointJsonParser new];
-                [parser parseData:data];
-                // notification about new data ready
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"DepositionPointsUpdated" object:nil];
-            }];
-        }
-    }];
-        
-    // fetch and return cached data
-    dispatch_queue_t queue = dispatch_queue_create("fetchData", nil);
-    dispatch_async(queue, ^{
-
-        NSArray *points = [self getPointsForLatitude:lat longitude:lon radius:radius];
-        completion(points, nil);
-    });
 }
 
 -(void)loadPictureForPartner:(NSString*)picName completion:(void(^)(UIImage *image, NSError *error))completion
@@ -269,7 +265,7 @@
                     cacheItem.url = [pictureRequestUrl absoluteString];
                     cacheItem.data = data;
                     cacheItem.lastModified = lastModified;
-                    [moc save:nil];
+                    [self saveContext:moc];
                     if (completion) completion([UIImage imageWithData:cacheItem.data], nil);
                 }
             }
@@ -291,7 +287,7 @@
                 cacheItem.url = [pictureRequestUrl absoluteString];
                 cacheItem.data = data;
                 cacheItem.lastModified = lastModified;
-                [moc save:nil];
+                [self saveContext:moc];
                 if (completion) completion([UIImage imageWithData:cacheItem.data], nil);
             }
             else
@@ -302,6 +298,32 @@
     }];
 }
 
+-(void)beginGetDataForLatitude:(double)lat longitude:(double)lon radius:(double)radius
+                    completion:(void(^)(NSArray *points, NSError *error))completion
+{
+    // request new data
+    NSURL *requestUrl = [TinkoffApi depositionPointsForLatitude:lat longitude:lon radius:radius];
+    [[NetworkManager sharedInstance] getData:requestUrl completion:^(NSData *data, NSError *error) {
+        if (!error && [data length] > 0)
+        {
+            // parse data and save to db
+            [parseQueue addOperationWithBlock:^{
+                DepositionPointJsonParser *parser = [DepositionPointJsonParser new];
+                [parser parseData:data];
+                // notification about new data ready
+                [[NSNotificationCenter defaultCenter] postNotificationName:DepositionPointsUpdatedNotificationName object:nil];
+            }];
+        }
+    }];
+    
+    // fetch and return cached data
+    dispatch_queue_t queue = dispatch_queue_create("fetchData", nil);
+    dispatch_async(queue, ^{
+        
+        NSArray *points = [self getPointsForLatitude:lat longitude:lon radius:radius];
+        completion(points, nil);
+    });
+}
 
 -(NSArray*)getPointsForLatitude:(double)lat longitude:(double)lon radius:(double)radius
 {

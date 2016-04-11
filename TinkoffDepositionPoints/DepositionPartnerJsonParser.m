@@ -12,7 +12,6 @@
 
 @implementation DepositionPartnerJsonParser
 {
-    NSNumberFormatter *fmt;
     NSManagedObjectContext *context;
 }
 
