@@ -254,7 +254,7 @@ NSString* const DepositionPartnersUpdatedNotificationName = @"DepositionPartners
         if (!error && [cache count] > 0)
         {
             cacheItem = [cache firstObject];
-            // get file date on the server
+            // get last modified date from the server
             NSDate *lastModified = [[NetworkManager sharedInstance] getLastModifiedDateSynchronously:pictureRequestUrl];
             if ([cacheItem.lastModified compare: lastModified] == NSOrderedAscending)
             {
@@ -327,7 +327,7 @@ NSString* const DepositionPartnersUpdatedNotificationName = @"DepositionPartners
 
 -(NSArray*)getPointsForLatitude:(double)lat longitude:(double)lon radius:(double)radius
 {
-    // WARNING: This math is broken when we’re close to the 180° meridian
+    // WARNING: This math is broken when we’re close to the 180° meridian 
     double D = radius * 2;
     double const R = 6371009.; // Earth readius in meters
     double meanLatitidue = lat * M_PI / 180.;
